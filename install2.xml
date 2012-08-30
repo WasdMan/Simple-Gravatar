@@ -50,12 +50,7 @@ function getGravatar($ary)
 		return;
 	}
 
-	if (!is_array($ary))
-	{
-		fatal_error('Error Param!');
-	}
-
-	if (!isset($ary['email']))
+	if (!is_array($ary) or !isset($ary['email']))
 	{
 		fatal_error('Error Param!');
 	}
