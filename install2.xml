@@ -170,7 +170,7 @@ function getGravatar($ary)
 		</operation>
 	</file>
 	
-	<file name="$sourcedir/Who.php">
+	<file name="$sourcedir/Who.php" error="skip">
 		<operation>
 			<search position="before"><![CDATA[		'mods' => array(]]></search>
 			<add><![CDATA[
