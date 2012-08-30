@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+    <id>Inter:SimpleGravatar</id>
+
+	<file name="$languagedir/Modifications.english-utf8.php" error="skip">
+		<operation>
+			<search position="before"><![CDATA[<?php
+// Version: 2.0; Modifications]]></search>
+			<add><![CDATA[
+// Simple Gravatar
+$txt['gravatar'] = 'Gravatar';
+$txt['gravatar_profile'] = 'Gravatar';
+$txt['gravatar_profile_description'] = 'Change your gravatar at <em>Gravatar.com</em>';
+$txt['gravatar_title'] = 'Gravatars';
+$txt['gravatar_groups_description'] = 'User groups it is authorized to them to use gravatars';
+$txt['gravatar_groups'] = 'Choice of groups';
+$txt['gravatar_enable'] = 'Integration with the Gravatar server';
+$txt['gravatar_max_size'] = 'Maximum size Gravatars';
+$txt['gravatar_max_size_subtext'] = 'The recommended size - 80';
+$txt['gravatar_default_face'] = 'Picture by default';
+$txt['gravatar_default_faces'] = array('404' => '404', 'mm' => 'mm', 'identicon' => 'identicon', 'monsterid' => 'monsterid', 'wavatar' => 'wavatar', 'retro' => 'retro');
+$txt['gravatar_rating'] = 'Rating (censorship)';
+$txt['gravatar_ratings'] = array('g' => 'g', 'pg' => 'pg', 'r' => 'r', 'x' => 'x',);
+$txt['gravatar_transfer_protocol'] = 'Data transfer protocol';
+$txt['gravatar_transfer_protocols'] = array('http' => 'http', 'https' => 'https');
+$txt['gravatar_copyright'] = '<a href="http://tiraspol.me/" title="Simple Gravatar" target="_blank" class="new_win">Simple Gravatar &copy; 2012</a>';
+$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
+$txt['permissionname_profile_gravatar_avatar'] = 'Use gravatars';
+$txt['permissionname_simple_profile_gravatar_avatar'] = 'Use gravatars';]]></add>
+		</operation>
+	</file>
+
+	<file name="$languagedir/Modifications.russian-utf8.php" error="skip">
+		<operation>
+		<operation>
+			<search position="before"><![CDATA[<?php
+// Version: 2.0; Modifications]]></search>
+			<add><![CDATA[
+// Simple Gravatar
+$txt['gravatar'] = 'Gravatar';
+$txt['gravatar_profile'] = 'Граватар';
+$txt['gravatar_profile_description'] = 'Вы можете изменить свой глобальный аватар на сайте <em>Gravatar.com</em>';
+$txt['gravatar_title'] = 'Граватары';
+$txt['gravatar_groups_description'] = 'Группы пользователей, которым разрешено использовать граватары';
+$txt['gravatar_groups'] = 'Выбор групп';
+$txt['gravatar_enable'] = 'Интеграция с сервером Gravatar';
+$txt['gravatar_max_size'] = 'Максимальный размер граватаров';
+$txt['gravatar_max_size_subtext'] = 'Рекомендуемый размер - 80';
+$txt['gravatar_default_face'] = 'Граватар по умолчанию';
+$txt['gravatar_default_faces'] = array('404' => '404', 'mm' => 'Силуэт', 'identicon' => 'Геометрический узор', 'monsterid' => 'Монстр', 'wavatar' => 'Лицо', 'retro' => 'Ретро');
+$txt['gravatar_rating'] = 'Рейтинг (цензура)';
+$txt['gravatar_ratings'] = array('g' => 'g', 'pg' => 'pg', 'r' => 'r', 'x' => 'x',);
+$txt['gravatar_transfer_protocol'] = 'Протокол передачи данных';
+$txt['gravatar_transfer_protocols'] = array('http' => 'http', 'https' => 'https');
+$txt['gravatar_copyright'] = '<a href="http://tiraspol.me/" title="Simple Gravatar" target="_blank" class="new_win">Simple Gravatar &copy; 2012</a>';
+$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
+$txt['permissionname_profile_gravatar_avatar'] = 'Использовать граватары';
+$txt['permissionname_simple_profile_gravatar_avatar'] = 'Использовать граватары';]]></add>
+		</operation>
+	</file>
+
+	<file name="$languagedir/Help.english-utf8.php" error="skip">
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+// Simple Gravatar
+$helptxt['gravatar_title'] = 'Here can set up use of avatars of users from a site <a href="http://gravatar.com/" target="_blank">Gravatar</a>';
+
+$helptxt['gravatar_enable'] = 'Function includes/disconnects operation a module <strong>Simple Gravatar</strong>.';
+
+$helptxt['gravatar_default_face'] = '<strong>404:</strong> do not load any image if none is associated with the email hash, instead return an HTTP 404 (File Not Found) response<br />
+<strong>mm:</strong> (mystery-man) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash)<br />
+<strong>identicon:</strong> a geometric pattern based on an email hash<br />
+<strong>monsterid:</strong> a generated \'monster\' with different colors, faces, etc<br />
+<strong>wavatar:</strong> generated faces with differing features and backgrounds<br />
+<strong>retro:</strong> awesome generated, 8-bit arcade-style pixelated faces';
+
+$helptxt['gravatar_rating'] = '<strong>g:</strong> suitable for display on all websites with any audience type.<br />
+<strong>pg:</strong> may contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence.<br />
+<strong>r:</strong> may contain such things as harsh profanity, intense violence, nudity, or hard drug use.<br />
+<strong>x:</strong> may contain hardcore sexual imagery or extremely disturbing violence.';
+
+$helptxt['gravatar_transfer_protocol'] = 'If you\'re displaying Gravatars on a page that is being served over SSL (e.g. the page URL starts with HTTPS), then you\'ll want to serve your Gravatars via SSL as well, otherwise you\'ll get annoying security warnings in most browsers.';
+]]></add>
+		</operation>
+	</file>
+	
+	<file name="$languagedir/Help.russian-utf8.php" error="skip">
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+// Simple Gravatar
+$helptxt['gravatar_title'] = 'Здесь можно настроить использование аватаров пользователей с сайта <a href="http://gravatar.com/" target="_blank">Gravatar</a>';
+
+$helptxt['gravatar_enable'] = 'Функция включает/отключает работу мода <strong>Simple Gravatar</strong>.';
+
+$helptxt['gravatar_default_face'] = '<strong>404:</strong> изображение не будет загружено, если не будет найден хеш.<br />
+<strong>mm:</strong> силуэт человека(хеш почты не используется).<br />
+<strong>identicon:</strong> геометрическая фигура на основе хеша электронного письма<br />
+<strong>monsterid:</strong> сгенерированный \'монстр\' с различными цветами, поверхностями, и т.д..<br />
+<strong>wavatar:</strong> сгенерированные лица с отличающимися функциями и фонами.<br />
+<strong>retro:</strong> удивительные 8-битные лица в стиле аркад.';
+
+$helptxt['gravatar_rating'] = '<strong>g:</strong> подходит для показа на всех веб-сайтах с любым типом аудитории.<br />
+<strong>pg:</strong> может содержать грубые жесты, провокационно одетых людей, провокационно одетых лиц, нецензурные слова, или мягкого насилия.<br />
+<strong>r:</strong> может содержать такие вещи как резкая профанация, интенсивное насилие, нагота или использование сильного наркотика.<br />
+<strong>x:</strong> может содержать ужасное сексуальное формирование изображений или чрезвычайно тревожащее насилие.';
+
+$helptxt['gravatar_transfer_protocol'] = 'Если ваш сайт работает через https, то включите опцию https, иначе будут ошибки.';
+]]></add>
+		</operation>
+	</file>
+
+</modification>
