@@ -1,0 +1,291 @@
+<?xml version="1.1"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>Inter:SimpleGravatar</id>
+	
+	<file name="$sourcedir/Load.php">
+		<operation>
+			<search position="replace"><![CDATA[
+			'url' => isset($user_settings['avatar']) ? $user_settings['avatar'] : '',]]></search>
+			<add><![CDATA[
+			'url' => isset($user_settings['avatar']) ? $user_settings['avatar'] === 'gravatar' ? getGravatar(array('email' => $user_settings['email_address'], 'show_img' => FALSE)) : $user_settings['avatar'] : '',]]></add>
+		</operation>
+	
+<!--		<operation>
+			<search position="before"><![CDATA[			'url' => $profile['avatar'] == '' ? '' : (stristr($profile['avatar'], 'http://') ? $profile['avatar'] : $modSettings['avatar_url'] . '/' . $profile['avatar'])]]></search>
+			<add><![CDATA[,
+			'gravatar' => getGravatar(array('email' => $profile['email_address'])),]]></add>
+		</operation>-->
+		
+		<operation>
+			<search position="after"><![CDATA[// First do a quick run through to make sure there is something to be shown.]]></search>
+			<add><![CDATA[if ($profile['avatar'] === 'gravatar')
+		$memberContext[$user]['avatar']['image'] = getGravatar(array('email' => $profile['email_address']));
+
+	]]></add>
+		</operation>
+		
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+/**
+ * Get either a Gravatar URL or complete image tag for a specified email address.
+ *
+ * @param string $ary['email'] The email address
+ * @param string $size Size in pixels, defaults to 80px [ 1 - 2048 ]
+ * @param string $face Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+ * @param string $rating Maximum rating (inclusive) [ g | pg | r | x ]
+ * @param bool $ary['img'] True to return a complete IMG tag False for just the URL
+ * @param array $atts Optional, additional key/value attributes to include in the IMG tag
+ * @param string $protocol
+ * @return String containing either just a URL or a complete image tag
+ * @source http://gravatar.com/site/implement/images/php/
+ */
+function getGravatar($ary)
+{
+	global $modSettings, $context;
+
+	if (!$modSettings['gravatar_enable']) /*or !allowedTo('profile_gravatar_avatar')*/
+	{
+		return;
+	}
+
+	if (!is_array($ary))
+	{
+		fatal_error('Error Param!');
+	}
+
+	if (!isset($ary['email']))
+	{
+		fatal_error('Error Param!');
+	}
+
+	if (empty($context['gravatar'][$ary['email']]))
+	{
+		$size = isset($ary['size']) ? (int) $ary['size'] : isset($modSettings['gravatar_max_size']) ? (int) $modSettings['gravatar_max_size'] : 80;
+		$face = isset($ary['face']) ? $ary['face'] : isset($modSettings['gravatar_default_face']) && in_array($modSettings['gravatar_default_face'], array('404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro')) ? $modSettings['gravatar_default_face'] : 'monsterid';
+		$rating = isset($ary['rating']) ? $ary['rating'] : isset($modSettings['gravatar_rating']) ? $modSettings['gravatar_rating'] : 'g';
+		$atts = isset($ary['atts']) ? $ary['atts'] : array();
+		$protocol = isset($ary['protocol']) ? $ary['protocol'] === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/' : $modSettings['gravatar_transfer_protocol'] === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/';
+
+		$context['gravatar'][$ary['email']]['url'] = $protocol;
+		$context['gravatar'][$ary['email']]['url'] .= md5(strtolower(trim($ary['email'])));
+		$context['gravatar'][$ary['email']]['url'] .= '?s=' . $size . '&d=' . $face . '&r=' . $rating;
+	}
+
+	$ary['show_img'] = isset($ary['show_img']) ? (bool) $ary['show_img'] : TRUE;
+	if ($ary['show_img'] !== TRUE)
+	{
+		return $context['gravatar'][$ary['email']]['url'];
+	}
+	else
+	{
+		$context['gravatar'][$ary['email']]['image'] = '<img src="' . $context['gravatar'][$ary['email']]['url'] . '"';
+		// $context['gravatar'][$ary['email']]['image'] .= ' ' . implode(' ', array_values($atts));
+		if (!empty($atts))
+		{
+			foreach ($atts as $key => $val)
+			{
+				$context['gravatar'][$ary['email']]['image'] .= ' ' . $key . '="' . $val . '"';
+			}
+		}
+		$context['gravatar'][$ary['email']]['image'] .= ' />';
+		return $context['gravatar'][$ary['email']]['image'];
+	}
+}]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/ManageAttachments.php">
+		<operation>
+			<search position="before"><![CDATA[			array('text', 'custom_avatar_url', 40),]]></search>
+			<add><![CDATA[
+		
+		array('title', 'gravatar_title'),
+			array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']),
+			array('check', 'gravatar_enable'),
+			array('text', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext']),
+			array('select', 'gravatar_default_face', $txt['gravatar_default_faces']),
+			array('select', 'gravatar_rating', $txt['gravatar_ratings']),
+			array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols']),]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/ManagePermissions.php">
+		<operation>
+			<search position="before"><![CDATA[			'profile_remote_avatar' => array(false, 'profile', 'use_avatar'),]]></search>
+			<add><![CDATA[
+			'profile_gravatar_avatar' => array(false, 'profile', 'use_avatar'),]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Profile.php">
+		<operation>
+			<search position="before"><![CDATA[	// If all went well, we have a valid member ID!
+	list ($memID) = $memberResult;
+	$context['id_member'] = $memID;
+	$cur_profile = $user_profile[$memID];]]></search>
+			<add><![CDATA[
+	$cur_profile['gravatar'] = getGravatar(array('email' => $user_profile[$memID]['email_address'], 'show_img' => TRUE));]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Profile-Modify.php">
+		<operation>
+			<search position="before"><![CDATA[		'allow_external' => allowedTo('profile_remote_avatar') || (!$context['user']['is_owner'] && allowedTo('profile_extra_any')),]]></search>
+			<add><![CDATA[
+		'gravatar' => $cur_profile['gravatar'],
+		'allow_gravatar' => $modSettings['gravatar_enable'] && ($context['user']['is_owner'] && allowedTo('profile_gravatar_avatar') || (!$context['user']['is_owner'] && allowedTo('profile_extra_any'))),]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[	elseif ($cur_profile['avatar'] != '' && file_exists($modSettings['avatar_directory'] . '/' . $cur_profile['avatar']) && $context['member']['avatar']['allow_server_stored'])
+		$context['member']['avatar'] += array(
+			'choice' => 'server_stored',
+			'server_pic' => $cur_profile['avatar'] == '' ? 'blank.gif' : $cur_profile['avatar'],
+			'external' => 'http://'
+		);]]></search>
+			<add><![CDATA[
+	elseif ($cur_profile['avatar'] == 'gravatar' && $context['member']['avatar']['allow_gravatar'])
+		$context['member']['avatar'] += array(
+			'choice' => 'gravatar',
+			'server_pic' => 'blank.gif',
+			'external' => 'http://'
+		);]]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[		// Selected the upload avatar option and had one already uploaded before or didn't upload one.
+		else
+			$profile_vars['avatar'] = '';
+	}]]></search>
+			<add><![CDATA[
+	elseif ($value === 'gravatar' && allowedTo('profile_gravatar_avatar') && !empty($modSettings['gravatar_enable']))
+	{
+		// We need these clean...
+		$cur_profile['id_attach'] = 0;
+		$cur_profile['attachment_type'] = 0;
+		$cur_profile['filename'] = '';
+		
+		// Remove any attached avatar...
+		removeAttachments(array('id_member' => $memID));
+		
+		$profile_vars['avatar'] = 'gravatar';
+	}]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Who.php">
+		<operation>
+			<search position="before"><![CDATA[		'mods' => array(]]></search>
+			<add><![CDATA[
+			$txt['gravatar_copyright'],]]></add>
+		</operation>
+	</file>
+	
+	<file name="$themedir/Profile.template.php">
+		<operation>
+			<search position="before"><![CDATA['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['avatar_will_upload'] . '</label>' : '', ']]></search>
+			<add><![CDATA[
+								', !empty($context['member']['avatar']['allow_gravatar']) ? '<br /><input type="radio" onclick="swap_avatar(this); return true;" name="avatar_choice" id="avatar_choice_gravatar" value="gravatar"' . ($context['member']['avatar']['choice'] == 'gravatar' ? ' checked="checked"' : '') . ' class="input_radio" /><label for="avatar_choice_gravatar"' . (isset($context['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['gravatar_profile'] . '</label>' : '', ']]></add>
+		</operation>
+		
+		<operation>
+			<search position="before"><![CDATA[	// If the user is able to upload avatars to the server show them an upload box.
+	if (!empty($context['member']['avatar']['allow_upload']))
+	{
+		echo '
+								<div id="avatar_upload">
+									<input type="file" size="44" name="attachment" value="" onfocus="selectRadioByName(document.forms.creator.avatar_choice, \'upload\');" class="input_file" />
+									', ($context['member']['avatar']['id_attach'] > 0 ? '<br /><br /><img src="' . $context['member']['avatar']['href'] . (strpos($context['member']['avatar']['href'], '?') === false ? '?' : '&amp;') . 'time=' . time() . '" alt="" /><input type="hidden" name="id_attach" value="' . $context['member']['avatar']['id_attach'] . '" />' : ''), '
+								</div>';
+	}]]></search>
+			<add><![CDATA[
+
+	// If the user is able to upload avatars to the Gravatar.
+	if (!empty($context['member']['avatar']['allow_gravatar']))
+	{
+		echo '
+								<div id="avatar_gravatar">
+									', $context['member']['avatar']['gravatar'], '
+								</div>';
+	}]]></add>
+		</operation>
+		
+		<operation>
+			<search position="replace"><![CDATA[
+									', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "' . ($context['member']['avatar']['choice'] == 'server_stored' ? '' : 'none') . '";' : '', '
+									', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "' . ($context['member']['avatar']['choice'] == 'external' ? '' : 'none') . '";' : '', '
+									', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "' . ($context['member']['avatar']['choice'] == 'upload' ? '' : 'none') . '";' : '', '
+
+									function swap_avatar(type)
+									{
+										switch(type.id)
+										{
+											case "avatar_choice_server_stored":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												break;
+											case "avatar_choice_external":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												break;
+											case "avatar_choice_upload":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "";' : '', '
+												break;
+											case "avatar_choice_none":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												break;
+										}
+									}]]></search>
+			<add><![CDATA[
+									', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "' . ($context['member']['avatar']['choice'] == 'server_stored' ? '' : 'none') . '";' : '', '
+									', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "' . ($context['member']['avatar']['choice'] == 'external' ? '' : 'none') . '";' : '', '
+									', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "' . ($context['member']['avatar']['choice'] == 'upload' ? '' : 'none') . '";' : '', '
+									', !empty($context['member']['avatar']['allow_gravatar']) ? 'document.getElementById("avatar_gravatar").style.display = "' . ($context['member']['avatar']['choice'] == 'gravatar' ? '' : 'none') . '";' : '', '
+
+									function swap_avatar(type)
+									{
+										switch(type.id)
+										{
+											case "avatar_choice_server_stored":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_gravatar']) ? 'document.getElementById("avatar_gravatar").style.display = "none";' : '', '
+												break;
+											case "avatar_choice_external":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_gravatar']) ? 'document.getElementById("avatar_gravatar").style.display = "none";' : '', '
+												break;
+											case "avatar_choice_upload":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "";' : '', '
+												', !empty($context['member']['avatar']['allow_gravatar']) ? 'document.getElementById("avatar_gravatar").style.display = "none";' : '', '
+												break;
+											case "avatar_choice_none":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_gravatar']) ? 'document.getElementById("avatar_gravatar").style.display = "none";' : '', '
+												break;
+											case "avatar_choice_gravatar":
+												', !empty($context['member']['avatar']['allow_server_stored']) ? 'document.getElementById("avatar_server_stored").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_external']) ? 'document.getElementById("avatar_external").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_upload']) ? 'document.getElementById("avatar_upload").style.display = "none";' : '', '
+												', !empty($context['member']['avatar']['allow_gravatar']) ? 'document.getElementById("avatar_gravatar").style.display = "";' : '', '
+												break;
+										}
+									}]]></add>
+		</operation>
+	</file>
+</modification>
