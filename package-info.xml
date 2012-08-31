@@ -6,7 +6,7 @@
         <name>Simple Gravatar</name>
         <version>beta</version>
         <type>modification</type>
-	<install for="2.0.2">
+	<install for="2.0 - 2.99.99">
 		<readme type="inline">This will install Simple Gravatar for SMF 2.0.2</readme>
 		<modification>install2.xml</modification>
 		<modification>lang/ansi.xml</modification>
@@ -16,7 +16,7 @@
 		<redirect url="?action=admin;area=manageattachments;sa=avatars" timeout="5000" />
 	</install>
 	
-	<uninstall for="2.0.2">
+	<uninstall for="2.0 - 2.99.99">
 		<readme type="inline">This will uninstall Simple Gravatar for SMF 2.0.2</readme>
 		<modification reverse="true">install2.xml</modification>
 		<modification reverse="true">lang/ansi.xml</modification>

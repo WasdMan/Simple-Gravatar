@@ -170,8 +170,8 @@ function getGravatar($ary)
 		</operation>
 	</file>
 	
-	<file name="$sourcedir/Who.php" error="skip">
-		<operation>
+	<file name="$sourcedir/Who.php">
+		<operation error="ignore">
 			<search position="before"><![CDATA[		'mods' => array(]]></search>
 			<add><![CDATA[
 			$txt['gravatar_copyright'],]]></add>
