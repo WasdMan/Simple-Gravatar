@@ -178,7 +178,7 @@ function getGravatar($ary)
 		<operation error="ignore">
 			<search position="before"><![CDATA[		'mods' => array(]]></search>
 			<add><![CDATA[
-			$txt['gravatar_copyright'],]]></add>
+			'<a href="http://tiraspol.me/" title="Simple Gravatar" target="_blank" class="new_win">Simple Gravatar &copy; 2012</a>',]]></add>
 		</operation>
 	</file>
 	
