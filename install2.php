@@ -30,3 +30,23 @@ foreach ($defaults as $index => $value)
 		$updates[$index] = $value;
 
 updateSettings($updates);
+
+// Хуки
+$hooks = array(
+	'integrate_pre_include' => '$sourcedir/Subs-Gravatar.php', // файл с рычагами
+	'integrate_load_theme' => 'gravatar_load_theme', // css, js
+	'integrate_general_mod_settings' => 'gravatar_general_mod_settings', // админ настройки
+	'integrate_load_permissions' => 'gravatar_load_permissions', // Права доступа
+	'integrate_admin_areas' => 'gravatar_admin_areas',
+	// 'integrate_helpadmin' => 'gravatar_helpadmin', // SMF 2.1
+);
+
+if (!empty($context['uninstalling']))
+	$call = 'remove_integration_function';
+else
+	$call = 'add_integration_function';
+
+foreach ($hooks as $hook => $function)
+{
+	$call($hook, $function);
+}

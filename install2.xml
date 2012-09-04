@@ -95,7 +95,7 @@ function getGravatar($ary)
 		</operation>-->
 	</file>
 	
-	<file name="$sourcedir/ManageAttachments.php">
+	<!--<file name="$sourcedir/ManageAttachments.php">
 		<operation>
 			<search position="before"><![CDATA[			array('text', 'custom_avatar_url', 40),]]></search>
 			<add><![CDATA[
@@ -108,15 +108,15 @@ function getGravatar($ary)
 			array('select', 'gravatar_rating', $txt['gravatar_ratings']),
 			array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols']),]]></add>
 		</operation>
-	</file>
+	</file>-->
 	
-	<file name="$sourcedir/ManagePermissions.php">
+	<!--<file name="$sourcedir/ManagePermissions.php">
 		<operation>
 			<search position="before"><![CDATA[			'profile_remote_avatar' => array(false, 'profile', 'use_avatar'),]]></search>
 			<add><![CDATA[
 			'profile_gravatar_avatar' => array(false, 'profile', 'use_avatar'),]]></add>
 		</operation>
-	</file>
+	</file>-->
 	
 	<file name="$sourcedir/Profile.php">
 		<operation>

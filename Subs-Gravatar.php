@@ -56,3 +56,36 @@ function getGravatar($ary)
 		return $context['gravatar'][$ary['email']]['image'];
 	}
 }
+
+function gravatar_load_theme()
+{
+	loadLanguage('Gravatar');
+}
+
+function gravatar_admin_areas(&$admin_areas)
+{
+	loadLanguage('AdminGravatar');
+}
+
+function gravatar_general_mod_settings(&$config_vars)
+{
+	global $txt;
+	$config_vars[] = array('title', 'gravatar_title');
+	$config_vars[] = array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']);
+	$config_vars[] = array('check', 'gravatar_enable');
+	$config_vars[] = array('text', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext']);
+	$config_vars[] = array('select', 'gravatar_default_face', $txt['gravatar_default_faces']);
+	$config_vars[] = array('select', 'gravatar_rating', $txt['gravatar_ratings']);
+	$config_vars[] = array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols']);
+}
+
+function gravatar_load_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
+{
+	$permissionList['membergroup'] += array('profile_gravatar_avatar' => array(false, 'profile', 'use_avatar'));
+}
+
+// SMF 2.1
+/*function gravatar_helpadmin()
+{
+	loadLanguage('HelpGravatar');
+}*/

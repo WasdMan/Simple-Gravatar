@@ -3,61 +3,6 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
     <id>Inter:SimpleGravatar</id>
 
-	<file name="$languagedir/Modifications.english-utf8.php" error="skip">
-		<operation>
-			<search position="before"><![CDATA[<?php
-// Version: 2.0; Modifications]]></search>
-			<add><![CDATA[
-// Simple Gravatar
-$txt['gravatar'] = 'Gravatar';
-$txt['gravatar_profile'] = 'Gravatar';
-$txt['gravatar_profile_description'] = 'Change your gravatar at <em>Gravatar.com</em>';
-$txt['gravatar_title'] = 'Gravatars';
-$txt['gravatar_groups_description'] = 'User groups it is authorized to them to use gravatars';
-$txt['gravatar_groups'] = 'Choice of groups';
-$txt['gravatar_enable'] = 'Integration with the Gravatar server';
-$txt['gravatar_max_size'] = 'Maximum size Gravatars';
-$txt['gravatar_max_size_subtext'] = 'The recommended size - 80';
-$txt['gravatar_default_face'] = 'Picture by default';
-$txt['gravatar_default_faces'] = array('404' => '404', 'mm' => 'mm', 'identicon' => 'identicon', 'monsterid' => 'monsterid', 'wavatar' => 'wavatar', 'retro' => 'retro');
-$txt['gravatar_rating'] = 'Rating (censorship)';
-$txt['gravatar_ratings'] = array('g' => 'g', 'pg' => 'pg', 'r' => 'r', 'x' => 'x',);
-$txt['gravatar_transfer_protocol'] = 'Data transfer protocol';
-$txt['gravatar_transfer_protocols'] = array('http' => 'http', 'https' => 'https');
-$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
-$txt['permissionname_profile_gravatar_avatar'] = 'Use gravatars';
-$txt['permissionname_simple_profile_gravatar_avatar'] = 'Use gravatars';]]></add>
-		</operation>
-	</file>
-
-	<file name="$languagedir/Modifications.russian-utf8.php" error="skip">
-		<operation>
-		<operation>
-			<search position="before"><![CDATA[<?php
-// Version: 2.0; Modifications]]></search>
-			<add><![CDATA[
-// Simple Gravatar
-$txt['gravatar'] = 'Gravatar';
-$txt['gravatar_profile'] = 'Граватар';
-$txt['gravatar_profile_description'] = 'Вы можете изменить свой глобальный аватар на сайте <em>Gravatar.com</em>';
-$txt['gravatar_title'] = 'Граватары';
-$txt['gravatar_groups_description'] = 'Группы пользователей, которым разрешено использовать граватары';
-$txt['gravatar_groups'] = 'Выбор групп';
-$txt['gravatar_enable'] = 'Интеграция с сервером Gravatar';
-$txt['gravatar_max_size'] = 'Максимальный размер граватаров';
-$txt['gravatar_max_size_subtext'] = 'Рекомендуемый размер - 80';
-$txt['gravatar_default_face'] = 'Граватар по умолчанию';
-$txt['gravatar_default_faces'] = array('404' => '404', 'mm' => 'Силуэт', 'identicon' => 'Геометрический узор', 'monsterid' => 'Монстр', 'wavatar' => 'Лицо', 'retro' => 'Ретро');
-$txt['gravatar_rating'] = 'Рейтинг (цензура)';
-$txt['gravatar_ratings'] = array('g' => 'g', 'pg' => 'pg', 'r' => 'r', 'x' => 'x',);
-$txt['gravatar_transfer_protocol'] = 'Протокол передачи данных';
-$txt['gravatar_transfer_protocols'] = array('http' => 'http', 'https' => 'https');
-$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
-$txt['permissionname_profile_gravatar_avatar'] = 'Использовать граватары';
-$txt['permissionname_simple_profile_gravatar_avatar'] = 'Использовать граватары';]]></add>
-		</operation>
-	</file>
-
 	<file name="$languagedir/Help.english-utf8.php" error="skip">
 		<operation>
 			<search position="end" />
@@ -80,6 +25,8 @@ $helptxt['gravatar_rating'] = '<strong>g:</strong> suitable for display on all w
 <strong>x:</strong> may contain hardcore sexual imagery or extremely disturbing violence.';
 
 $helptxt['gravatar_transfer_protocol'] = 'If you\'re displaying Gravatars on a page that is being served over SSL (e.g. the page URL starts with HTTPS), then you\'ll want to serve your Gravatars via SSL as well, otherwise you\'ll get annoying security warnings in most browsers.';
+
+$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
 ]]></add>
 		</operation>
 	</file>
@@ -106,6 +53,8 @@ $helptxt['gravatar_rating'] = '<strong>g:</strong> подходит для по�
 <strong>x:</strong> может содержать ужасное сексуальное формирование изображений или чрезвычайно тревожащее насилие.';
 
 $helptxt['gravatar_transfer_protocol'] = 'Если ваш сайт работает через https, то включите опцию https, иначе будут ошибки.';
+
+$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
 ]]></add>
 		</operation>
 	</file>

@@ -4,22 +4,34 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
         <id>Inter:SimpleGravatar</id>
         <name>Simple Gravatar</name>
-        <version>beta</version>
+        <version>rc1</version>
         <type>modification</type>
 	<install for="2.0 - 2.99.99">
 		<readme type="inline">This will install Simple Gravatar for SMF 2.0.2</readme>
 		<modification>install2.xml</modification>
-		<modification>lang/ansi.xml</modification>
-		<modification>lang/utf8.xml</modification>
+		<modification>languages/ansi.xml</modification>
+		<modification>languages/utf8.xml</modification>
+		<require-file name="Subs-Gravatar.php" destination="$sourcedir" />
+		<require-dir name="languages" destination="$themedir" />
 		<!-- Install scripts -->
 		<database>install2.php</database>
-		<redirect url="?action=admin;area=manageattachments;sa=avatars" timeout="5000" />
+		<redirect url="?action=admin;area=packages;sa=browse;" timeout="1000" />
 	</install>
 	
 	<uninstall for="2.0 - 2.99.99">
 		<readme type="inline">This will uninstall Simple Gravatar for SMF 2.0.2</readme>
 		<modification reverse="true">install2.xml</modification>
-		<modification reverse="true">lang/ansi.xml</modification>
-		<modification reverse="true">lang/utf8.xml</modification>
+		<modification reverse="true">languages/ansi.xml</modification>
+		<modification reverse="true">languages/utf8.xml</modification>
+		<remove-file name="$sourcedir/Subs-Gravatar.php" />
+		<remove-file name="$languagedir/AdminGravatar.english.php" />
+		<remove-file name="$languagedir/AdminGravatar.english-utf8.php" />
+		<remove-file name="$languagedir/AdminGravatar.russian.php" />
+		<remove-file name="$languagedir/AdminGravatar.russian-utf8.php" />
+		<remove-file name="$languagedir/Gravatar.english.php" />
+		<remove-file name="$languagedir/Gravatar.english-utf8.php" />
+		<remove-file name="$languagedir/Gravatar.russian.php" />
+		<remove-file name="$languagedir/Gravatar.russian-utf8.php" />
+		<redirect url="?action=admin;area=packages;sa=browse;" timeout="1000" />
 	</uninstall>
 </package-info>
