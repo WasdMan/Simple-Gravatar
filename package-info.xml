@@ -28,6 +28,10 @@
 		<remove-file name="$languagedir/AdminGravatar.english-utf8.php" />
 		<remove-file name="$languagedir/AdminGravatar.russian.php" />
 		<remove-file name="$languagedir/AdminGravatar.russian-utf8.php" />
+		<remove-file name="$languagedir/HelpGravatar.english.php" />
+		<remove-file name="$languagedir/HelpGravatar.english-utf8.php" />
+		<remove-file name="$languagedir/HelpGravatar.russian.php" />
+		<remove-file name="$languagedir/HelpGravatar.russian-utf8.php" />
 		<remove-file name="$languagedir/Gravatar.english.php" />
 		<remove-file name="$languagedir/Gravatar.english-utf8.php" />
 		<remove-file name="$languagedir/Gravatar.russian.php" />
