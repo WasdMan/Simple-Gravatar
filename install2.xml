@@ -20,12 +20,16 @@
 		<operation>
 			<search position="after"><![CDATA[// First do a quick run through to make sure there is something to be shown.]]></search>
 			<add><![CDATA[if ($profile['avatar'] === 'gravatar')
-		$memberContext[$user]['avatar']['image'] = getGravatar(array('email' => $profile['email_address']));
+	{
+		$memberContext[$user]['avatar']['image'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => TRUE));
+		$memberContext[$user]['avatar']['href'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => FALSE));
+		$memberContext[$user]['avatar']['url'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => FALSE));
+	}
 
 	]]></add>
 		</operation>
 		
-		<operation>
+		<!--<operation>
 			<search position="end" />
 			<add><![CDATA[
 /**
@@ -88,7 +92,7 @@ function getGravatar($ary)
 		return $context['gravatar'][$ary['email']]['image'];
 	}
 }]]></add>
-		</operation>
+		</operation>-->
 	</file>
 	
 	<file name="$sourcedir/ManageAttachments.php">
