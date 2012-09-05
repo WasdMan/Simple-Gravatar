@@ -95,6 +95,15 @@ function getGravatar($ary)
 		</operation>-->
 	</file>
 	
+	<file name="$sourcedir/Subs.php">
+		<operation>
+			<search position="replace"><![CDATA[// Full URL?
+		elseif (substr($user_info['avatar']['url'], 0, 7) == 'http://')]]></search>
+			<add><![CDATA[// Full URL?
+		elseif (substr($user_info['avatar']['url'], 0, 7) == 'http://' or substr($user_info['avatar']['url'], 0, 8) == 'https://')]]></add>
+		</operation>
+	</file>
+	
 	<!--<file name="$sourcedir/ManageAttachments.php">
 		<operation>
 			<search position="before"><![CDATA[			array('text', 'custom_avatar_url', 40),]]></search>

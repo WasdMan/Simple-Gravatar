@@ -13,9 +13,8 @@
 		<modification>languages/utf8.xml</modification>
 		<require-file name="Subs-Gravatar.php" destination="$sourcedir" />
 		<require-dir name="languages" destination="$themedir" />
-		<!-- Install scripts -->
 		<database>install2.php</database>
-		<redirect url="?action=admin;area=packages;sa=browse;" timeout="1000" />
+		<redirect url="?action=admin;area=modsettings;" timeout="1000" />
 	</install>
 	
 	<uninstall for="2.0 - 2.99.99">

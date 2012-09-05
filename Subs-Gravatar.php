@@ -57,7 +57,7 @@ function getGravatar($ary)
 	}
 }
 
-function gravatar_load_theme()
+function gravatar_profile_areas(&$profile_areas)
 {
 	loadLanguage('Gravatar');
 }
