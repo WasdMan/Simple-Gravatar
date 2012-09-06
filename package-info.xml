@@ -31,10 +31,10 @@
 		<remove-file name="$languagedir/HelpGravatar.english-utf8.php" />
 		<remove-file name="$languagedir/HelpGravatar.russian.php" />
 		<remove-file name="$languagedir/HelpGravatar.russian-utf8.php" />
-		<remove-file name="$languagedir/Gravatar.english.php" />
-		<remove-file name="$languagedir/Gravatar.english-utf8.php" />
-		<remove-file name="$languagedir/Gravatar.russian.php" />
-		<remove-file name="$languagedir/Gravatar.russian-utf8.php" />
+		<remove-file name="$languagedir/ProfileGravatar.english.php" />
+		<remove-file name="$languagedir/ProfileGravatar.english-utf8.php" />
+		<remove-file name="$languagedir/ProfileGravatar.russian.php" />
+		<remove-file name="$languagedir/ProfileGravatar.russian-utf8.php" />
 		<redirect url="?action=admin;area=packages;sa=browse;" timeout="1000" />
 	</uninstall>
 </package-info>
