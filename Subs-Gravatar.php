@@ -59,7 +59,7 @@ function getGravatar($ary)
 
 function gravatar_profile_areas(&$profile_areas)
 {
-	loadLanguage('Gravatar');
+	loadLanguage('ProfileGravatar');
 }
 
 function gravatar_admin_areas(&$admin_areas)
