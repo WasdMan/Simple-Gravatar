@@ -182,7 +182,23 @@ function getGravatar($ary)
 	}]]></add>
 		</operation>
 	</file>
-	
+
+	<!--<file name="$sourcedir/ManageSettings.php">
+		<operation>
+			<search position="before"><![CDATA[	loadLanguage('Help');]]></search>
+			<add><![CDATA[
+	loadLanguage('HelpGravatar');]]></add>
+		</operation>
+	</file>-->
+
+	<file name="$sourcedir/Help.php">
+		<operation>
+			<search position="before"><![CDATA[	loadLanguage('Help');]]></search>
+			<add><![CDATA[
+	loadLanguage('HelpGravatar');]]></add>
+		</operation>
+	</file>
+
 	<file name="$sourcedir/Who.php">
 		<operation error="ignore">
 			<search position="before"><![CDATA[		'mods' => array(]]></search>
@@ -190,7 +206,7 @@ function getGravatar($ary)
 			'<a href="http://tiraspol.me/" title="Simple Gravatar" target="_blank" class="new_win">Simple Gravatar &copy; 2012</a>',]]></add>
 		</operation>
 	</file>
-	
+
 	<file name="$themedir/Profile.template.php">
 		<operation>
 			<search position="before"><![CDATA['modify_error']['bad_avatar']) ? ' class="error"' : '') . '>' . $txt['avatar_will_upload'] . '</label>' : '', ']]></search>

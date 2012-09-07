@@ -20,4 +20,4 @@ $helptxt['gravatar_rating'] = '<strong>g:</strong> подходит для показа на всех в
 
 $helptxt['gravatar_transfer_protocol'] = 'Если ваш сайт работает через https, то включите опцию https, иначе будут ошибки.';
 
-$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
+$txt['permissionhelp_profile_gravatar_avatar'] = 'Разрешить использовать аватары с сайта gravatar.com.';

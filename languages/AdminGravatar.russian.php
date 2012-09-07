@@ -14,5 +14,6 @@ $txt['gravatar_rating'] = 'Рейтинг (цензура)';
 $txt['gravatar_ratings'] = array('g' => 'g', 'pg' => 'pg', 'r' => 'r', 'x' => 'x',);
 $txt['gravatar_transfer_protocol'] = 'Протокол передачи данных';
 $txt['gravatar_transfer_protocols'] = array('http' => 'http', 'https' => 'https');
+
 $txt['permissionname_profile_gravatar_avatar'] = 'Использовать граватары';
 $txt['permissionname_simple_profile_gravatar_avatar'] = 'Использовать граватары';

@@ -65,6 +65,7 @@ function gravatar_profile_areas(&$profile_areas)
 function gravatar_admin_areas(&$admin_areas)
 {
 	loadLanguage('AdminGravatar');
+	loadLanguage('HelpGravatar');
 }
 
 function gravatar_general_mod_settings(&$config_vars)

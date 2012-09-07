@@ -14,6 +14,6 @@ $txt['gravatar_rating'] = 'Rating (censorship)';
 $txt['gravatar_ratings'] = array('g' => 'g', 'pg' => 'pg', 'r' => 'r', 'x' => 'x',);
 $txt['gravatar_transfer_protocol'] = 'Data transfer protocol';
 $txt['gravatar_transfer_protocols'] = array('http' => 'http', 'https' => 'https');
-$txt['permissionhelp_profile_gravatar_avatar'] = 'This permission allows the user to use avatars from site gravatar.com.';
+
 $txt['permissionname_profile_gravatar_avatar'] = 'Use gravatars';
 $txt['permissionname_simple_profile_gravatar_avatar'] = 'Use gravatars';
