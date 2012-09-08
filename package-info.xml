@@ -13,7 +13,7 @@
 		<modification>languages/utf8.xml</modification>-->
 		<require-file name="Subs-Gravatar.php" destination="$sourcedir" />
 		<require-dir name="languages" destination="$themedir" />
-		<database>install2.php</database>
+		<code>install2.php</code>
 		<redirect url="?action=admin;area=modsettings;" timeout="1000" />
 	</install>
 	
@@ -35,7 +35,7 @@
 		<remove-file name="$languagedir/ProfileGravatar.english-utf8.php" />
 		<remove-file name="$languagedir/ProfileGravatar.russian.php" />
 		<remove-file name="$languagedir/ProfileGravatar.russian-utf8.php" />
-		<database>install2.php</database>
+		<code>uninstall2.php</code>
 		<redirect url="?action=admin;area=packages;sa=browse;" timeout="1000" />
 	</uninstall>
 </package-info>

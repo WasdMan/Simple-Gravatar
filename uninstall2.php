@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 // Handle running this file by using SSI.php
 if (!defined('SMF') && file_exists(dirname(__FILE__) . '/SSI.php'))
@@ -7,9 +7,6 @@ elseif (!defined('SMF'))
 	die('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 elseif ((SMF == 'SSI') && !$user_info['is_admin'])
 	die('Admin privileges required.');
-
-// global $smcFunc, $db_prefix, $modSettings, $sourcedir, $boarddir, $settings, $db_package_log, $package_cache;
-global $modSettings;
 
 // Хуки
 $hooks = array(
@@ -22,28 +19,7 @@ $hooks = array(
 	'integrate_profile_areas' => 'gravatar_profile_areas',
 );
 
-// if (!empty($context['uninstalling']))
-
-// Let's setup some standard settings.
-$defaults = array(
-	'gravatar_transfer_protocol' => 'http',
-	'gravatar_rating' => 'g',
-	'gravatar_default_face' => 'monsterid',
-	'gravatar_max_size' => '120',
-	'gravatar_enable' => '1',
-);
-
-$updates = array();
-
-foreach ($defaults as $index => $value)
-{
-	if (!isset($modSettings[$index]))
-		$updates[$index] = $value;
-}
-
-updateSettings($updates);
-
-$call = 'add_integration_function';
+$call = 'remove_integration_function';
 
 foreach ($hooks as $hook => $function)
 {
