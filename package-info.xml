@@ -4,7 +4,7 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
         <id>Inter:SimpleGravatar</id>
         <name>Simple Gravatar</name>
-        <version>rc2</version>
+        <version>rc3</version>
         <type>modification</type>
 	<install for="2.0 - 2.99.99">
 		<readme type="inline">This will install Simple Gravatar for SMF 2.0.2</readme>
@@ -35,6 +35,7 @@
 		<remove-file name="$languagedir/ProfileGravatar.english-utf8.php" />
 		<remove-file name="$languagedir/ProfileGravatar.russian.php" />
 		<remove-file name="$languagedir/ProfileGravatar.russian-utf8.php" />
+		<database>install2.php</database>
 		<redirect url="?action=admin;area=packages;sa=browse;" timeout="1000" />
 	</uninstall>
 </package-info>
