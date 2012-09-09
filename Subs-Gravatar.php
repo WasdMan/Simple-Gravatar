@@ -21,7 +21,7 @@ function getGravatar($ary)
 {
 	global $modSettings, $context;
 
-	if (!$modSettings['gravatar_enable']) /*or !allowedTo('profile_gravatar_avatar')*/
+	if (!$modSettings['gravatar_enable'])
 		return;
 
 	if (!is_array($ary) or !isset($ary['email']))
@@ -46,7 +46,6 @@ function getGravatar($ary)
 	else
 	{
 		$context['gravatar'][$ary['email']]['image'] = '<img src="' . $context['gravatar'][$ary['email']]['url'] . '"';
-		// $context['gravatar'][$ary['email']]['image'] .= ' ' . implode(' ', array_values($atts));
 		if (!empty($atts))
 		{
 			foreach ($atts as $key => $val)
@@ -71,22 +70,19 @@ function gravatar_admin_areas(&$admin_areas)
 function gravatar_general_mod_settings(&$config_vars)
 {
 	global $txt;
-	$config_vars[] = array('title', 'gravatar_title');
-	$config_vars[] = array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']);
-	$config_vars[] = array('check', 'gravatar_enable');
-	$config_vars[] = array('text', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext']);
-	$config_vars[] = array('select', 'gravatar_default_face', $txt['gravatar_default_faces']);
-	$config_vars[] = array('select', 'gravatar_rating', $txt['gravatar_ratings']);
-	$config_vars[] = array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols']);
+	
+	$config_vars += array(
+		array('title', 'gravatar_title'),
+		array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']),
+		array('check', 'gravatar_enable'),
+		array('text', 'gravatar_max_size', 3, 'subtext' => $txt['gravatar_max_size_subtext']),
+		array('select', 'gravatar_default_face', $txt['gravatar_default_faces']),
+		array('select', 'gravatar_rating', $txt['gravatar_ratings']),
+		array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols'],
+	));
 }
 
 function gravatar_load_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
 {
-	$permissionList['membergroup'] += array('profile_gravatar_avatar' => array(false, 'profile', 'use_avatar'));
+	$permissionList['membergroup'] += array('profile_gravatar_avatar' => array(FALSE, 'profile', 'use_avatar'));
 }
-
-// SMF 2.1
-/*function gravatar_helpadmin()
-{
-	loadLanguage('HelpGravatar');
-}*/

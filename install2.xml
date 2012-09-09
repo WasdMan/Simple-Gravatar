@@ -1,4 +1,4 @@
-<?xml version="1.1"?>
+<?xml version="1.0"?>
 <!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
 	<id>Inter:SimpleGravatar</id>
@@ -10,89 +10,17 @@
 			<add><![CDATA[
 			'url' => isset($user_settings['avatar']) ? $user_settings['avatar'] === 'gravatar' ? getGravatar(array('email' => $user_settings['email_address'], 'show_img' => FALSE)) : $user_settings['avatar'] : '',]]></add>
 		</operation>
-	
-<!--		<operation>
-			<search position="before"><![CDATA[			'url' => $profile['avatar'] == '' ? '' : (stristr($profile['avatar'], 'http://') ? $profile['avatar'] : $modSettings['avatar_url'] . '/' . $profile['avatar'])]]></search>
-			<add><![CDATA[,
-			'gravatar' => getGravatar(array('email' => $profile['email_address'])),]]></add>
-		</operation>-->
 		
 		<operation>
 			<search position="after"><![CDATA[// First do a quick run through to make sure there is something to be shown.]]></search>
 			<add><![CDATA[if ($profile['avatar'] === 'gravatar')
 	{
 		$memberContext[$user]['avatar']['image'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => TRUE));
-		$memberContext[$user]['avatar']['href'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => FALSE));
-		$memberContext[$user]['avatar']['url'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => FALSE));
+		$memberContext[$user]['avatar']['href'] = $memberContext[$user]['avatar']['url'] = getGravatar(array('email' => $profile['email_address'], 'show_img' => FALSE));
 	}
 
 	]]></add>
 		</operation>
-		
-		<!--<operation>
-			<search position="end" />
-			<add><![CDATA[
-/**
- * Get either a Gravatar URL or complete image tag for a specified email address.
- *
- * @param string $ary['email'] The email address
- * @param string $size Size in pixels, defaults to 80px [ 1 - 2048 ]
- * @param string $face Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
- * @param string $rating Maximum rating (inclusive) [ g | pg | r | x ]
- * @param bool $ary['img'] True to return a complete IMG tag False for just the URL
- * @param array $atts Optional, additional key/value attributes to include in the IMG tag
- * @param string $protocol
- * @return String containing either just a URL or a complete image tag
- * @source http://gravatar.com/site/implement/images/php/
- */
-function getGravatar($ary)
-{
-	global $modSettings, $context;
-
-	if (!$modSettings['gravatar_enable']) /*or !allowedTo('profile_gravatar_avatar')*/
-	{
-		return;
-	}
-
-	if (!is_array($ary) or !isset($ary['email']))
-	{
-		fatal_error('Error Param!');
-	}
-
-	if (empty($context['gravatar'][$ary['email']]))
-	{
-		$size = isset($ary['size']) ? (int) $ary['size'] : isset($modSettings['gravatar_max_size']) ? (int) $modSettings['gravatar_max_size'] : 80;
-		$face = isset($ary['face']) ? $ary['face'] : isset($modSettings['gravatar_default_face']) && in_array($modSettings['gravatar_default_face'], array('404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro')) ? $modSettings['gravatar_default_face'] : 'monsterid';
-		$rating = isset($ary['rating']) ? $ary['rating'] : isset($modSettings['gravatar_rating']) ? $modSettings['gravatar_rating'] : 'g';
-		$atts = isset($ary['atts']) ? $ary['atts'] : array();
-		$protocol = isset($ary['protocol']) ? $ary['protocol'] === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/' : $modSettings['gravatar_transfer_protocol'] === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/';
-
-		$context['gravatar'][$ary['email']]['url'] = $protocol;
-		$context['gravatar'][$ary['email']]['url'] .= md5(strtolower(trim($ary['email'])));
-		$context['gravatar'][$ary['email']]['url'] .= '?s=' . $size . '&d=' . $face . '&r=' . $rating;
-	}
-
-	$ary['show_img'] = isset($ary['show_img']) ? (bool) $ary['show_img'] : TRUE;
-	if ($ary['show_img'] !== TRUE)
-	{
-		return $context['gravatar'][$ary['email']]['url'];
-	}
-	else
-	{
-		$context['gravatar'][$ary['email']]['image'] = '<img src="' . $context['gravatar'][$ary['email']]['url'] . '"';
-		// $context['gravatar'][$ary['email']]['image'] .= ' ' . implode(' ', array_values($atts));
-		if (!empty($atts))
-		{
-			foreach ($atts as $key => $val)
-			{
-				$context['gravatar'][$ary['email']]['image'] .= ' ' . $key . '="' . $val . '"';
-			}
-		}
-		$context['gravatar'][$ary['email']]['image'] .= ' />';
-		return $context['gravatar'][$ary['email']]['image'];
-	}
-}]]></add>
-		</operation>-->
 	</file>
 	
 	<file name="$sourcedir/Subs.php">
@@ -103,29 +31,6 @@ function getGravatar($ary)
 		elseif (substr($user_info['avatar']['url'], 0, 7) == 'http://' or substr($user_info['avatar']['url'], 0, 8) == 'https://')]]></add>
 		</operation>
 	</file>
-	
-	<!--<file name="$sourcedir/ManageAttachments.php">
-		<operation>
-			<search position="before"><![CDATA[			array('text', 'custom_avatar_url', 40),]]></search>
-			<add><![CDATA[
-		
-		array('title', 'gravatar_title'),
-			array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']),
-			array('check', 'gravatar_enable'),
-			array('text', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext']),
-			array('select', 'gravatar_default_face', $txt['gravatar_default_faces']),
-			array('select', 'gravatar_rating', $txt['gravatar_ratings']),
-			array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols']),]]></add>
-		</operation>
-	</file>-->
-	
-	<!--<file name="$sourcedir/ManagePermissions.php">
-		<operation>
-			<search position="before"><![CDATA[			'profile_remote_avatar' => array(false, 'profile', 'use_avatar'),]]></search>
-			<add><![CDATA[
-			'profile_gravatar_avatar' => array(false, 'profile', 'use_avatar'),]]></add>
-		</operation>
-	</file>-->
 	
 	<file name="$sourcedir/Profile.php">
 		<operation>
@@ -182,14 +87,6 @@ function getGravatar($ary)
 	}]]></add>
 		</operation>
 	</file>
-
-	<!--<file name="$sourcedir/ManageSettings.php">
-		<operation>
-			<search position="before"><![CDATA[	loadLanguage('Help');]]></search>
-			<add><![CDATA[
-	loadLanguage('HelpGravatar');]]></add>
-		</operation>
-	</file>-->
 
 	<file name="$sourcedir/Help.php">
 		<operation>

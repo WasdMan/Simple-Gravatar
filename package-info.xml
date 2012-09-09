@@ -4,24 +4,20 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
         <id>Inter:SimpleGravatar</id>
         <name>Simple Gravatar</name>
-        <version>rc3</version>
+        <version>rc4</version>
         <type>modification</type>
-	<install for="2.0 - 2.99.99">
+	<install for="2.0 - 2.0.99">
 		<readme type="inline">This will install Simple Gravatar for SMF 2.0.2</readme>
 		<modification>install2.xml</modification>
-		<!--<modification>languages/ansi.xml</modification>
-		<modification>languages/utf8.xml</modification>-->
 		<require-file name="Subs-Gravatar.php" destination="$sourcedir" />
 		<require-dir name="languages" destination="$themedir" />
 		<code>install2.php</code>
 		<redirect url="?action=admin;area=modsettings;" timeout="1000" />
 	</install>
 	
-	<uninstall for="2.0 - 2.99.99">
+	<uninstall for="2.0 - 2.0.99">
 		<readme type="inline">This will uninstall Simple Gravatar for SMF 2.0.2</readme>
 		<modification reverse="true">install2.xml</modification>
-		<!--<modification reverse="true">languages/ansi.xml</modification>
-		<modification reverse="true">languages/utf8.xml</modification>-->
 		<remove-file name="$sourcedir/Subs-Gravatar.php" />
 		<remove-file name="$languagedir/AdminGravatar.english.php" />
 		<remove-file name="$languagedir/AdminGravatar.english-utf8.php" />
