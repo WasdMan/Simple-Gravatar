@@ -30,6 +30,7 @@ function getGravatar($ary)
 	if (empty($context['gravatar'][$ary['email']]))
 	{
 		$size = isset($ary['size']) ? (int) $ary['size'] : isset($modSettings['gravatar_max_size']) ? (int) $modSettings['gravatar_max_size'] : 80;
+		$size = max(1, min($size, 2048));
 		$face = isset($ary['face']) ? $ary['face'] : isset($modSettings['gravatar_default_face']) && in_array($modSettings['gravatar_default_face'], array('404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro')) ? $modSettings['gravatar_default_face'] : 'monsterid';
 		$rating = isset($ary['rating']) ? $ary['rating'] : isset($modSettings['gravatar_rating']) ? $modSettings['gravatar_rating'] : 'g';
 		$atts = isset($ary['atts']) ? $ary['atts'] : array();
@@ -75,7 +76,7 @@ function gravatar_general_mod_settings(&$config_vars)
 		array('title', 'gravatar_title'),
 		array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']),
 		array('check', 'gravatar_enable'),
-		array('text', 'gravatar_max_size', 3, 'subtext' => $txt['gravatar_max_size_subtext']),
+		array('text', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext']),
 		array('select', 'gravatar_default_face', $txt['gravatar_default_faces']),
 		array('select', 'gravatar_rating', $txt['gravatar_ratings']),
 		array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols'],
