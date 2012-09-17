@@ -18,7 +18,7 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version RC8
+ * @Version RC9
  * @Time 17.09.2012 18:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
@@ -46,7 +46,7 @@ function getGravatar($ary)
 
 	$url = $protocol;
 	$url .= md5(strtolower(trim($ary['email'])));
-	$url .= '?s=' . $size . '&d=' . $modSettings['gravatar_default_face'] . '&r=' . $rating;
+	$url .= '?s=' . $size . '&amp;d=' . $face . '&amp;r=' . $rating;
 
 	$ary['show_img'] = isset($ary['show_img']) ? (bool) $ary['show_img'] : TRUE;
 	if ($ary['show_img'] !== TRUE)
@@ -60,7 +60,7 @@ function getGravatar($ary)
 			foreach ($atts as $key => $val)
 				$image .= ' ' . htmlspecialchars($key, ENT_QUOTES) . '="' . htmlspecialchars($val, ENT_QUOTES) . '"';
 		}
-		$image .= ' />';
+		$image .= ' alt="" />';
 		return $image;
 	}
 }
