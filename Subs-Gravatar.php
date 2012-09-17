@@ -18,8 +18,8 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version RC7
- * @Time 17.09.2012 12:45
+ * @Version RC8
+ * @Time 17.09.2012 18:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -39,7 +39,7 @@ function getGravatar($ary)
 
 	$rating = isset($ary['rating']) ? (in_array($ary['rating'], array('g', 'pg', 'r', 'x')) ? $ary['rating'] : 'g') : $modSettings['gravatar_rating'];
 
-	$atts = isset($ary['atts']) ? $ary['atts'] : array();
+	$atts = isset($ary['atts']) && is_array($ary['atts']) ? $ary['atts'] : array();
 
 	$protocol = isset($ary['protocol']) ? ($ary['protocol'] === 'http' ? 'http' : 'https') : $modSettings['gravatar_transfer_protocol'];
 	$protocol = $protocol === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/';
@@ -56,8 +56,9 @@ function getGravatar($ary)
 		$image = '<img src="' . $url . '"';
 		if (!empty($atts))
 		{
+			$atts = array_unique($atts);
 			foreach ($atts as $key => $val)
-				$image .= ' ' . $key . '="' . $val . '"';
+				$image .= ' ' . htmlspecialchars($key, ENT_QUOTES) . '="' . htmlspecialchars($val, ENT_QUOTES) . '"';
 		}
 		$image .= ' />';
 		return $image;
