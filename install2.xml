@@ -8,7 +8,7 @@
 			<search position="replace"><![CDATA[
 			'url' => isset($user_settings['avatar']) ? $user_settings['avatar'] : '',]]></search>
 			<add><![CDATA[
-			'url' => isset($user_settings['avatar']) ? $user_settings['avatar'] === 'gravatar' ? getGravatar(array('email' => $user_settings['email_address'], 'show_img' => FALSE)) : $user_settings['avatar'] : '',]]></add>
+			'url' => isset($user_settings['avatar']) ? ($user_settings['avatar'] === 'gravatar' ? getGravatar(array('email' => $user_settings['email_address'], 'show_img' => FALSE)) : $user_settings['avatar']) : '',]]></add>
 		</operation>
 		
 		<operation>

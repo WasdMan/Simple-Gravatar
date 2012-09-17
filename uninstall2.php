@@ -11,6 +11,7 @@ elseif ((SMF == 'SSI') && !$user_info['is_admin'])
 $hooks = array(
 	'integrate_pre_include' => '$sourcedir/Subs-Gravatar.php', 
 	'integrate_general_mod_settings' => 'gravatar_general_mod_settings',
+	'integrate_modify_modifications' => 'gravatar_modify_modifications',
 	'integrate_load_permissions' => 'gravatar_load_permissions',
 	'integrate_admin_areas' => 'gravatar_admin_areas',
 	'integrate_profile_areas' => 'gravatar_profile_areas',
