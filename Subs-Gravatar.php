@@ -18,8 +18,8 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version RC9
- * @Time 17.09.2012 18:00
+ * @Version RC10
+ * @Time 18.09.2012 11:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -33,28 +33,25 @@ function getGravatar($ary)
 	if (!is_array($ary) or !isset($ary['email']))
 		fatal_error('Error Param!');
 
+	$protocol = isset($ary['protocol']) ? ($ary['protocol'] === 'http' ? 'http' : 'https') : $modSettings['gravatar_transfer_protocol'];
+	$protocol = $protocol === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/';
+
 	$size = isset($ary['size']) ? (is_int($ary['size']) && $ary['size'] > 1 && $ary['size'] < 2048 ? $ary['size'] : 80) : $modSettings['gravatar_max_size'];
 
 	$face = isset($ary['face']) ? (in_array($ary['face'], array('404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro')) ? $ary['face'] : 'monsterid') : $modSettings['gravatar_default_face'];
 
 	$rating = isset($ary['rating']) ? (in_array($ary['rating'], array('g', 'pg', 'r', 'x')) ? $ary['rating'] : 'g') : $modSettings['gravatar_rating'];
 
-	$atts = isset($ary['atts']) && is_array($ary['atts']) ? $ary['atts'] : array();
-
-	$protocol = isset($ary['protocol']) ? ($ary['protocol'] === 'http' ? 'http' : 'https') : $modSettings['gravatar_transfer_protocol'];
-	$protocol = $protocol === 'http' ? 'http://www.gravatar.com/avatar/' : 'https://secure.gravatar.com/avatar/';
-
 	$url = $protocol;
 	$url .= md5(strtolower(trim($ary['email'])));
 	$url .= '?s=' . $size . '&amp;d=' . $face . '&amp;r=' . $rating;
 
-	$ary['show_img'] = isset($ary['show_img']) ? (bool) $ary['show_img'] : TRUE;
-	if ($ary['show_img'] !== TRUE)
+	if (empty($ary['show_img']))
 		return $url;
 	else
 	{
 		$image = '<img src="' . $url . '"';
-		if (!empty($atts))
+		if (!empty($ary['atts']) and is_array($ary['atts']))
 		{
 			$atts = array_unique($atts);
 			foreach ($atts as $key => $val)
