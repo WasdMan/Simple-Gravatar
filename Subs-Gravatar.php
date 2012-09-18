@@ -18,8 +18,8 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version RC11
- * @Time 18.09.2012 12:30
+ * @Version RC12
+ * @Time 18.09.2012 18:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -140,4 +140,18 @@ function ModifyGravatarSettings($return_config = FALSE)
 function gravatar_load_permissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
 {
 	$permissionList['membergroup'] += array('profile_gravatar_avatar' => array(FALSE, 'profile', 'use_avatar'));
+}
+
+function gravatar_menu_buttons(&$buttons)
+{
+	global $context;
+	
+	if ($context['current_action'] === 'credits')
+		$context['copyrights']['mods'][] = '<a href="http://tiraspol.me/" title="Simple Gravatar" target="_blank" class="new_win">Simple Gravatar &copy; 2012</a>';
+}
+
+function gravatar_load_theme()
+{
+	if (isset($_GET['help']))
+		loadLanguage('HelpGravatar');
 }

@@ -9,7 +9,9 @@ elseif ((SMF == 'SSI') && !$user_info['is_admin'])
 	die('Admin privileges required.');
 
 $hooks = array(
-	'integrate_pre_include' => '$sourcedir/Subs-Gravatar.php', 
+	'integrate_pre_include' => '$sourcedir/Subs-Gravatar.php',
+	'integrate_load_theme' => 'gravatar_load_theme',
+	'integrate_menu_buttons' => 'gravatar_menu_buttons',
 	'integrate_general_mod_settings' => 'gravatar_general_mod_settings',
 	'integrate_modify_modifications' => 'gravatar_modify_modifications',
 	'integrate_load_permissions' => 'gravatar_load_permissions',
