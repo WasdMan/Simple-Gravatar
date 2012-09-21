@@ -18,8 +18,8 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version RC12
- * @Time 18.09.2012 18:00
+ * @Version 21.09.2012
+ * @Time 21.09.2012 11:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -84,13 +84,13 @@ function gravatar_modify_modifications(&$subActions)
 
 function ModifyGravatarSettings($return_config = FALSE)
 {
-	global $txt, $scripturl, $context, $settings, $sc; 
+	global $txt, $scripturl, $context;
 
 	$config_vars = array(
 		array('title', 'gravatar_title'),
 		array('permissions', 'profile_gravatar_avatar', 0, $txt['gravatar_groups_description']),
 		array('check', 'gravatar_enable'),
-		array('text', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext']),
+		array('int', 'gravatar_max_size', 6, 'subtext' => $txt['gravatar_max_size_subtext'], 'postinput' => $txt['gravatar_unit']),
 		array('select', 'gravatar_default_face', $txt['gravatar_default_faces']),
 		array('select', 'gravatar_rating', $txt['gravatar_ratings']),
 		array('select', 'gravatar_transfer_protocol', $txt['gravatar_transfer_protocols'],
@@ -107,7 +107,7 @@ function ModifyGravatarSettings($return_config = FALSE)
 		if (isset($_POST['gravatar_max_size']))
 		{
 			$_POST['gravatar_max_size'] = (int) $_POST['gravatar_max_size'];
-			$_POST['gravatar_max_size'] = max(1, min($_POST['gravatar_max_size'], 2048));
+			$_POST['gravatar_max_size'] = !$_POST['gravatar_max_size'] ? 80 : max(1, min($_POST['gravatar_max_size'], 2048));
 		}
 
 		if (isset($_POST['gravatar_default_face']))

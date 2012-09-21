@@ -4,7 +4,7 @@
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
         <id>Inter:SimpleGravatar</id>
         <name>Simple Gravatar</name>
-        <version>rc12</version>
+        <version>21.09.2012</version>
         <type>modification</type>
 	<install for="2.0 - 2.0.99">
 		<readme type="inline">This will install Simple Gravatar for SMF 2.0.2</readme>
