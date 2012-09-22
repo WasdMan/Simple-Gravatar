@@ -18,8 +18,8 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version 21.09.2012
- * @Time 21.09.2012 11:00
+ * @Version 22.09.2012
+ * @Time 22.09.2012 13:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -107,7 +107,7 @@ function ModifyGravatarSettings($return_config = FALSE)
 		if (isset($_POST['gravatar_max_size']))
 		{
 			$_POST['gravatar_max_size'] = (int) $_POST['gravatar_max_size'];
-			$_POST['gravatar_max_size'] = !$_POST['gravatar_max_size'] ? 80 : max(1, min($_POST['gravatar_max_size'], 2048));
+			$_POST['gravatar_max_size'] = empty($_POST['gravatar_max_size']) ? 80 : max(1, min($_POST['gravatar_max_size'], 2048));
 		}
 
 		if (isset($_POST['gravatar_default_face']))
