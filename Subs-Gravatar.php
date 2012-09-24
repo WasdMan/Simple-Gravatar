@@ -107,7 +107,7 @@ function ModifyGravatarSettings($return_config = FALSE)
 		foreach (array('gravatar_transfer_protocol', 'gravatar_max_size', 'gravatar_default_face', 'gravatar_rating') as $val)
 		{
 			if (!isset($_POST[$val]))
-				fatal_lang_error('Field ' . $val . ' Not Found!');
+				fatal_error('Field ' . $val . ' Not Found!');
 		}
 
 		$_POST['gravatar_transfer_protocol'] = $_POST['gravatar_transfer_protocol'] === 'http' ? 'http' : 'https';
