@@ -18,8 +18,8 @@ if (!defined('SMF'))
  * @Source http://gravatar.com/site/implement/images/php/
  * @Remix Inter http://tiraspol.me/
  * @Russian Support http://wedge.su/index.php?topic=14.0
- * @Version 22.09.2012
- * @Time 22.09.2012 13:00
+ * @Version 24.09.2012
+ * @Time 24.09.2012 13:00
  * @License Attribution 3.0 Unported (CC BY 3.0) - http://creativecommons.org/licenses/by/3.0/
  *
  */
@@ -104,26 +104,20 @@ function ModifyGravatarSettings($return_config = FALSE)
 	{
 		checkSession();
 
-		if (isset($_POST['gravatar_max_size']))
+		foreach (array('gravatar_transfer_protocol', 'gravatar_max_size', 'gravatar_default_face', 'gravatar_rating') as $val)
 		{
-			$_POST['gravatar_max_size'] = (int) $_POST['gravatar_max_size'];
-			$_POST['gravatar_max_size'] = empty($_POST['gravatar_max_size']) ? 80 : max(1, min($_POST['gravatar_max_size'], 2048));
+			if (!isset($_POST[$val]))
+				fatal_lang_error('Field ' . $val . ' Not Found!');
 		}
 
-		if (isset($_POST['gravatar_default_face']))
-		{
-			$_POST['gravatar_default_face'] = !empty($_POST['gravatar_default_face']) && in_array($_POST['gravatar_default_face'], array('404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro')) ? $_POST['gravatar_default_face'] : 'monsterid';
-		}
+		$_POST['gravatar_transfer_protocol'] = $_POST['gravatar_transfer_protocol'] === 'http' ? 'http' : 'https';
 
-		if (isset($_POST['gravatar_rating']))
-		{
-			$_POST['gravatar_rating'] = !empty($_POST['gravatar_rating']) && in_array($_POST['gravatar_rating'], array('g', 'pg', 'r', 'x')) ? $_POST['gravatar_rating'] : 'g';
-		}
+		$_POST['gravatar_max_size'] = (int) $_POST['gravatar_max_size'];
+		$_POST['gravatar_max_size'] = empty($_POST['gravatar_max_size']) ? 80 : max(1, min($_POST['gravatar_max_size'], 2048));
 
-		if (isset($_POST['gravatar_transfer_protocol']))
-		{
-			$_POST['gravatar_transfer_protocol'] = $_POST['gravatar_transfer_protocol'] === 'http' ? 'http' : 'https';
-		}
+		$_POST['gravatar_default_face'] = !empty($_POST['gravatar_default_face']) && in_array($_POST['gravatar_default_face'], array('404', 'mm', 'identicon', 'monsterid', 'wavatar', 'retro')) ? $_POST['gravatar_default_face'] : 'monsterid';
+
+		$_POST['gravatar_rating'] = !empty($_POST['gravatar_rating']) && in_array($_POST['gravatar_rating'], array('g', 'pg', 'r', 'x')) ? $_POST['gravatar_rating'] : 'g';
 
 		saveDBSettings($config_vars);
 
@@ -146,7 +140,7 @@ function gravatar_menu_buttons(&$buttons)
 {
 	global $context;
 	
-	if ($context['current_action'] === 'credits')
+	if (isset($context['current_action']) && $context['current_action'] === 'credits')
 		$context['copyrights']['mods'][] = '<a href="http://tiraspol.me/" title="Simple Gravatar" target="_blank" class="new_win">Simple Gravatar &copy; 2012</a>';
 }
 
